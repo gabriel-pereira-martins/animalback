@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('pets') // Nome da tabela
-export class Pets {
+@Entity('pet') // Nome da tabela
+export class Pet {
   @PrimaryGeneratedColumn() // Gerar o ID automaticamente
   id: number;
 

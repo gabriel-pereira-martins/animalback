@@ -1,29 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Pets } from './pets.entity';
+import { Pet } from './pet.entity';
 import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
-export class PetsService {
+export class PetService {
   constructor(
-    @InjectRepository(Pets)
-    private petsRepository: Repository<Pets>,
+    @InjectRepository(Pet)
+    private petsRepository: Repository<Pet>,
   ) {}
 
-  // Criar um novo pet
-  async createPet(name: string, image: string, description: string): Promise<Pets> {
+
+  async createPet(name: string, image: string, description: string): Promise<Pet> {
     const pet = this.petsRepository.create({ name, image, description });
     return await this.petsRepository.save(pet);
   }
 
-  // Obter todos os pets
-  async findAllPets(): Promise<Pets[]> {
+
+  async findAllPets(): Promise<Pet[]> {
     return this.petsRepository.find();
   }
 
-  // Obter um pet pelo ID
-  async findPetById(id: number): Promise<Pets> {
+
+  async findPetById(id): Promise<Pet> {
     const pet = await this.petsRepository.findOne(id);
     if (!pet) {
       throw new NotFoundException('Pet not found');
@@ -31,8 +31,8 @@ export class PetsService {
     return pet;
   }
 
-  // Atualizar um pet
-  async updatePet(id: number, name: string, image: string, description: string): Promise<Pets> {
+
+  async updatePet(id, name: string, image: string, description: string): Promise<Pet> {
     const pet = await this.petsRepository.findOne(id);
     if (!pet) {
       throw new NotFoundException('Pet not found');
@@ -44,7 +44,7 @@ export class PetsService {
     return this.petsRepository.save(pet);
   }
 
-  // Deletar um pet
+
   async deletePet(id: number): Promise<void> {
     const result = await this.petsRepository.delete(id);
     if (result.affected === 0) {
