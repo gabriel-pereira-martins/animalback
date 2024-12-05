@@ -5,6 +5,8 @@ import { User } from './user/user.entity';
 import { PetModule } from './pet/pet.module';
 import { Pet } from './pet/pet.entity';
 import { UploadModule } from './upload/upload.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -21,6 +23,10 @@ import { UploadModule } from './upload/upload.module';
     UserModule,
     PetModule,
     UploadModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'), // Diretório onde os arquivos serão armazenados
+      serveRoot: '/public', // Prefixo que você quer para o acesso via URL
+    }),
   ],
 })
 export class AppModule {}
